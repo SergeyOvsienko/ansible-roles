@@ -1,0 +1,5 @@
+#!/bin/bash
+export CONSUL_HTTP_ADDR=https://localhost:8501
+export CONSUL_CACERT=/etc/consul.d/ssl/{{ ca_cert }}
+export CONSUL_CLIENT_CERT=/etc/consul.d/ssl/{{ cli_cert }}
+export CONSUL_CLIENT_KEY=/etc/consul.d/ssl/{{ cli_key }}
