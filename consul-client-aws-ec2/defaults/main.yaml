@@ -1,0 +1,17 @@
+# Certificates for consul servers
+ca_cert: "ca.pem"
+client_cert: "client.pem"
+client_key: "client-key.pem"
+
+consul_binary_url: "https://releases.hashicorp.com/consul/1.4.1/consul_1.4.1_linux_amd64.zip"
+consul_download_path: "/tmp"
+consul_group: "consul"
+consul_user: "consul"
+consul_shell: "/usr/sbin/nologin"
+consul_home_dir: "/var/lib/consul"
+
+# Example consul dc
+consul_datacenter: "eu-west-3"
+consul_encrypt_key: "9aBBNjSGurSYNUpvpjAh3Q=="
+consul_ec2_tag_key: "consul_join"
+consul_ec2_tag_value: "{{ consul_datacenter }}"

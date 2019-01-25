@@ -1,0 +1,18 @@
+{
+    "bootstrap": false,
+    "server": false,
+    "datacenter": "{{ consul_datacenter }}",
+    "data_dir": "{{ consul_home_dir }}",
+    "encrypt": "{{ consul_encrypt_key }}",
+    "log_level": "INFO",
+    "enable_syslog": true,
+    "verify_incoming_rpc": true,
+    "verify_incoming_https": false,
+    "verify_outgoing": true,
+    "verify_server_hostname": true,
+    "ca_file": "/etc/consul.d/ssl/{{ ca_cert }}",
+    "cert_file": "/etc/consul.d/ssl/{{ client_cert }}",
+    "key_file": "/etc/consul.d/ssl/{{ client_key }}",
+    "bind_addr": "{{ ansible_default_ipv4.address }}",
+    "retry_join": ["provider=aws tag_key={{ consul_ec2_tag_key }} tag_value={{ consul_ec2_tag_value }}"]
+}

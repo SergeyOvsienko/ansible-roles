@@ -1,0 +1,71 @@
+- name: Get consul
+  get_url:
+    url: "{{ consul_binary_url }}"
+    dest: "{{ consul_download_path }}/consul.zip"
+  register: consul_download_status
+
+- name: Extract consul from zip archive
+  unarchive:
+    src: "{{ consul_download_path }}/consul.zip"
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Add consul group
+  group:
+    name: "{{ consul_group }}"
+    state: present
+
+- name: Add consul user
+  user:
+    name: "{{ consul_user }}"
+    group: "{{ consul_group }}"
+    shell: "{{ consul_shell }}"
+    home: "{{ consul_home_dir }}"
+    state: present
+
+- name: Create consul directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  loop:
+    - /etc/consul.d/
+    - /etc/consul.d/ssl
+    - /etc/consul.d/bootstrap
+    - /etc/consul.d/server
+
+- name: Copy tls certificate
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/consul.d/ssl/{{ item }}"
+    owner: consul
+    group: consul
+    mode: 0600
+  loop:
+    - "{{ ca_cert }}"
+    - "{{ client_cert }}"
+    - "{{ client_key }}"
+
+- name: Create consul config file
+  template:
+    src: config.json.j2
+    dest: /etc/consul.d/server/config.json
+    owner: consul
+    group: consul
+    mode: 0644
+  notify: restart consul
+
+- name: Create consul unit file
+  template:
+    src: consul.service.j2
+    dest: /etc/systemd/system/consul.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Start consul service
+  systemd:
+    state: started
+    name: consul
+    enabled: yes
+    daemon_reload: yes
