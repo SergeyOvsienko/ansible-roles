@@ -1,0 +1,21 @@
+[Unit]
+Description="HashiCorp Nomad - An application and service scheduler"
+Documentation=https://www.nomad.io/docs/
+Requires=network-online.target
+After=network-online.target
+ConditionFileNotEmpty={{ master.nomad_config_dir }}/{{ master.nomad_config_file }}
+
+[Service]
+User=nomad
+Group=nomad
+ExecStart=/usr/local/bin/nomad agent -config={{ master.nomad_config_dir }}
+ExecReload=/bin/kill --signal HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=2
+StartLimitBurst=3
+StartLimitIntervalSec=10
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

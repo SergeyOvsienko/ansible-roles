@@ -1,0 +1,17 @@
+master:
+  nomad_config_dir: "/etc/nomad.d/server"
+  nomad_config_file: "nomad.hcl"
+  nomad_bootstrap_expect: "3"
+  consul_ssl: false
+  consul_addr: "localhost:8501"
+  consul_ca_file: "/etc/consul.d/ssl/ca.pem"
+  consul_cert_file: "/etc/consul.d/ssl/client.pem"
+  consul_key_file: "/etc/consul.d/ssl/client-key.pem"
+client:
+  nomad_config_dir: "/etc/nomad.d/client"
+  nomad_config_file: "nomad.hcl"
+  consul_ssl: false
+  consul_addr: "localhost:8501"
+  consul_ca_file: "/etc/consul.d/ssl/ca.pem"
+  consul_cert_file: "/etc/consul.d/ssl/client.pem"
+  consul_key_file: "/etc/consul.d/ssl/client-key.pem"

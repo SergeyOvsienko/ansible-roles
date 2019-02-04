@@ -1,0 +1,5 @@
+- name: restart nomad-master
+  service: name=nomad-master state=restarted
+
+- name: restart nomad-client
+  service: name=nomad-client state=restarted

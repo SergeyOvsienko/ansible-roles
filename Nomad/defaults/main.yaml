@@ -1,0 +1,10 @@
+
+nomad_binary_url: "https://releases.hashicorp.com/nomad/0.8.7/nomad_0.8.7_linux_amd64.zip"
+nomad_download_path: "/tmp/"
+nomad_group: "nomad"
+nomad_user: "nomad"
+nomad_shell: "/usr/sbin/nologin"
+nomad_home_dir: "/var/lib/nomad"
+nomad_dc: "dc1"
+nomad_master: false
+nomad_client: false

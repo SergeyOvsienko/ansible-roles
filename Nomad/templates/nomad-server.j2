@@ -1,0 +1,25 @@
+data_dir = "{{ nomad_home_dir }}/server"
+  
+datacenter = "{{ nomad_dc }}"
+
+
+addresses {
+  http = "0.0.0.0"
+  rpc = "0.0.0.0"
+  serf = "0.0.0.0"
+}
+
+server {
+  enabled          = true
+  bootstrap_expect = {{ master.nomad_bootstrap_expect }}
+}
+
+{% if master.consul_ssl == true %}
+consul {
+  ssl       = true
+  address   = "{{ master.consul_addr }}"
+  ca_file   = "{{ master.consul_ca_file }}"
+  cert_file = "{{ master.consul_cert_file }}"
+  key_file  = "{{ master.consul_key_file }}"
+}
+{% endif %}
