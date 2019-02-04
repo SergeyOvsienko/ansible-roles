@@ -1,0 +1,29 @@
+data_dir = "{{ nomad_home_dir }}/client"
+  
+datacenter = "{{ nomad_dc }}"
+
+
+addresses {
+  http = "0.0.0.0"
+  rpc = "0.0.0.0"
+  serf = "0.0.0.0"
+}
+
+ports {
+  http = 4846
+  rpc  = 4847
+  serf = 4848
+}
+client {
+  enabled = true
+}
+
+{% if client.consul_ssl == true %}
+consul {
+  ssl       = true
+  address   = "{{ client.consul_addr }}"
+  ca_file   = "{{ client.consul_ca_file }}"
+  cert_file = "{{ client.consul_cert_file }}"
+  key_file  = "{{ client.consul_key_file }}"
+}
+{% endif %}

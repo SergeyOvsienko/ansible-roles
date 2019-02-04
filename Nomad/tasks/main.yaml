@@ -1,0 +1,6 @@
+---
+- include: master.yaml
+  when: nomad_master == "true"
+
+- include: client.yaml
+  when: nomad_client == "true"

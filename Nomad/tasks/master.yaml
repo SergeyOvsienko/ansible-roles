@@ -1,0 +1,58 @@
+---
+- name: Get nomad
+  get_url:
+    url: "{{ nomad_binary_url }}"
+    dest: "{{ nomad_download_path }}/nomad.zip"
+  register: nomad_download_status
+
+- name: Extract nomad from zip archive
+  unarchive:
+    src: "{{ nomad_download_path }}/nomad.zip"
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Add nomad group
+  group:
+    name: "{{nomad_group }}"
+    state: present
+
+- name: Add nomad user
+  user:
+    name: "{{ nomad_user }}"
+    group: "{{ nomad_group }}"
+    shell: "{{ nomad_shell }}"
+    home: "{{ nomad_home_dir }}"
+    state: present
+
+- name: Create nomad directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    recurse: yes
+  loop:
+    - "{{ master.nomad_config_dir }}"
+
+- name: Copy nomad server config file
+  template:
+    src: nomad-server.j2
+    dest: "{{ master.nomad_config_dir }}/{{ master.nomad_config_file }}"
+    owner: "{{ nomad_user }}"
+    group: "{{ nomad_group }}"
+    mode: 0644
+  notify: restart nomad-master
+
+- name: Copy nomad unit file
+  template:
+    src: nomad-master.service.j2
+    dest: /etc/systemd/system/nomad-master.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Start nomad service
+  systemd:
+    state: started
+    name: nomad-master
+    enabled: yes
+    daemon_reload: yes
