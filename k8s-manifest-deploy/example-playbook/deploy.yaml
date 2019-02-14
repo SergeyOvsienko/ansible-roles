@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  connection: local
+  become: false
+  vars_files:
+    - files/service-manifest-example.yaml
+
+  roles:
+    - k8s-manifest-deploy
