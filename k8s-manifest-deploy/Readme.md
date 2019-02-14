@@ -1,3 +1,3 @@
-### k8s-manifest-deploy role
+# k8s-manifest-deploy role
 
-# See example-playbook for more information
+### See example-playbook for more information
