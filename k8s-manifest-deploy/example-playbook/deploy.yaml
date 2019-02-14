@@ -2,8 +2,10 @@
 - hosts: localhost
   connection: local
   become: false
+  vars:
+    template_file: "files/example-manifest.yaml"
   vars_files:
-    - files/service-manifest-example.yaml
+    - files/example-vars.yaml
 
   roles:
     - k8s-manifest-deploy

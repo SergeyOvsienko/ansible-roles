@@ -3,5 +3,4 @@
   k8s:
     state: "{{ deploy_state }}"
     kubeconfig: "{{ kubeconfig }}"
-    definition:
-     "{{ k8s_manifest_conf }}"
+    definition: "{{ lookup('template', '{{ template_file }}') }}"
