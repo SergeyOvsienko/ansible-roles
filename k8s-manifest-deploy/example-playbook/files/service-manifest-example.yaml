@@ -1,0 +1,26 @@
+tag: "1.15.8-alpine"
+replica_count: "1"
+k8s_namespace: "default"
+
+k8s_manifest_conf: |
+  ---
+  apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: nginx-deployment
+    namespace: {{ k8s_namespace }}
+  spec:
+    selector:
+      matchLabels:
+        app: nginx
+    replicas: {{ replica_count }}
+    template:
+      metadata:
+        labels:
+          app: nginx
+      spec:
+        containers:
+        - name: nginx
+          image: nginx:{{ tag }}
+          ports:
+          - containerPort: 80

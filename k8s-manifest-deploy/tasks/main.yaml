@@ -1,0 +1,7 @@
+---
+- name: Deploy Service
+  k8s:
+    state: "{{ deploy_state }}"
+    kubeconfig: "{{ kubeconfig }}"
+    definition:
+     "{{ k8s_manifest_conf }}"

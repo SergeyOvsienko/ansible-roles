@@ -1,0 +1,3 @@
+---
+deploy_state: "present"
+kubeconfig: "~/.kube/config"
