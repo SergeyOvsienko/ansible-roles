@@ -1,9 +1,4 @@
-tag: "1.15.8-alpine"
-replica_count: "1"
-k8s_namespace: "default"
-
-k8s_manifest_conf: |
-  ---
+---
   apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
